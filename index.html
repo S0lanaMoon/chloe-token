@@ -1,0 +1,809 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>$CHLOE — She chose chaos. She chose Solana. She chose you.</title>
+  <link href="https://fonts.googleapis.com/css2?family=Zen+Dots&family=Rajdhani:wght@400;600;700&family=Orbitron:wght@400;700;900&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --bg: #06000f;
+      --bg2: #0d001e;
+      --pink: #ff2d78;
+      --cyan: #00f5ff;
+      --purple: #9b30ff;
+      --white: #f0e6ff;
+      --dim: #a07cc0;
+      --glow-pink: 0 0 20px #ff2d78aa, 0 0 60px #ff2d7844;
+      --glow-cyan: 0 0 20px #00f5ffaa, 0 0 60px #00f5ff44;
+      --glow-purple: 0 0 20px #9b30ffaa, 0 0 60px #9b30ff44;
+    }
+
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg);
+      color: var(--white);
+      font-family: 'Rajdhani', sans-serif;
+      overflow-x: hidden;
+      cursor: crosshair;
+    }
+
+    /* ── STARS ── */
+    #stars {
+      position: fixed; inset: 0; pointer-events: none; z-index: 0;
+      overflow: hidden;
+    }
+    .star {
+      position: absolute;
+      border-radius: 50%;
+      animation: twinkle var(--dur) ease-in-out infinite alternate;
+    }
+    @keyframes twinkle {
+      from { opacity: 0.1; transform: scale(0.8); }
+      to   { opacity: 1;   transform: scale(1.2); }
+    }
+
+    /* ── SCANLINES ── */
+    body::after {
+      content: '';
+      position: fixed; inset: 0;
+      background: repeating-linear-gradient(
+        0deg,
+        transparent,
+        transparent 2px,
+        rgba(0,0,0,0.07) 2px,
+        rgba(0,0,0,0.07) 4px
+      );
+      pointer-events: none;
+      z-index: 999;
+    }
+
+    /* ── NAV ── */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0;
+      z-index: 100;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 1rem 2.5rem;
+      background: linear-gradient(180deg, rgba(6,0,15,0.95) 0%, transparent 100%);
+      backdrop-filter: blur(6px);
+      border-bottom: 1px solid rgba(155,48,255,0.2);
+    }
+    .nav-logo {
+      font-family: 'Zen Dots', sans-serif;
+      font-size: 1.4rem;
+      color: var(--pink);
+      text-shadow: var(--glow-pink);
+      letter-spacing: 0.1em;
+    }
+    .nav-links { display: flex; gap: 2rem; }
+    .nav-links a {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 0.7rem;
+      color: var(--cyan);
+      text-decoration: none;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      transition: color 0.2s, text-shadow 0.2s;
+    }
+    .nav-links a:hover {
+      color: var(--white);
+      text-shadow: var(--glow-cyan);
+    }
+
+    /* ── HERO ── */
+    #hero {
+      position: relative; z-index: 1;
+      min-height: 100vh;
+      display: flex; align-items: center; justify-content: center;
+      flex-direction: column;
+      text-align: center;
+      padding: 7rem 2rem 4rem;
+      overflow: hidden;
+    }
+
+    .hero-bg-grid {
+      position: absolute; inset: 0;
+      background-image:
+        linear-gradient(rgba(155,48,255,0.07) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(155,48,255,0.07) 1px, transparent 1px);
+      background-size: 50px 50px;
+      animation: gridDrift 20s linear infinite;
+    }
+    @keyframes gridDrift {
+      from { transform: translate(0,0); }
+      to   { transform: translate(50px, 50px); }
+    }
+
+    .hero-bg-radial {
+      position: absolute; inset: 0;
+      background:
+        radial-gradient(ellipse 60% 50% at 50% 60%, rgba(155,48,255,0.18) 0%, transparent 70%),
+        radial-gradient(ellipse 40% 30% at 20% 80%, rgba(255,45,120,0.12) 0%, transparent 60%),
+        radial-gradient(ellipse 40% 30% at 80% 20%, rgba(0,245,255,0.10) 0%, transparent 60%);
+      pointer-events: none;
+    }
+
+    .hero-eyecatch {
+      font-family: 'Orbitron', sans-serif;
+      font-size: clamp(0.55rem, 1.2vw, 0.75rem);
+      letter-spacing: 0.4em;
+      text-transform: uppercase;
+      color: var(--cyan);
+      text-shadow: var(--glow-cyan);
+      margin-bottom: 1.2rem;
+      animation: fadeUp 1s ease 0.2s both;
+    }
+
+    .hero-title {
+      font-family: 'Zen Dots', sans-serif;
+      font-size: clamp(4rem, 14vw, 10rem);
+      line-height: 0.9;
+      letter-spacing: -0.02em;
+      animation: fadeUp 1s ease 0.35s both;
+      position: relative;
+    }
+    .hero-title .t1 { color: var(--white); }
+    .hero-title .t2 {
+      color: var(--pink);
+      text-shadow: var(--glow-pink);
+      display: block;
+      animation: glitch 4s infinite;
+    }
+    @keyframes glitch {
+      0%, 90%, 100% { clip-path: none; transform: none; }
+      92% { clip-path: inset(30% 0 40% 0); transform: translate(-4px, 0); color: var(--cyan); }
+      94% { clip-path: inset(60% 0 10% 0); transform: translate(4px, 0); color: var(--pink); }
+      96% { clip-path: none; transform: none; }
+    }
+
+    .hero-tagline {
+      font-size: clamp(1rem, 2.5vw, 1.5rem);
+      color: var(--dim);
+      margin: 1.5rem 0 2.5rem;
+      font-weight: 600;
+      letter-spacing: 0.04em;
+      max-width: 600px;
+      animation: fadeUp 1s ease 0.5s both;
+    }
+    .hero-tagline span { color: var(--white); }
+
+    /* Mascot */
+    .mascot-wrap {
+      position: relative;
+      width: clamp(180px, 28vw, 300px);
+      height: clamp(180px, 28vw, 300px);
+      margin: 0 auto 2rem;
+      animation: fadeUp 1s ease 0.25s both, float 6s ease-in-out infinite;
+    }
+    @keyframes float {
+      0%, 100% { transform: translateY(0px) rotate(-1deg); }
+      50%       { transform: translateY(-18px) rotate(1deg); }
+    }
+    .mascot-ring {
+      position: absolute; inset: -12px;
+      border-radius: 50%;
+      border: 2px solid transparent;
+      background: linear-gradient(135deg, var(--pink), var(--cyan), var(--purple)) border-box;
+      -webkit-mask: linear-gradient(#fff 0 0) padding-box, linear-gradient(#fff 0 0);
+      -webkit-mask-composite: destination-out;
+      mask-composite: exclude;
+      animation: spinRing 8s linear infinite;
+    }
+    @keyframes spinRing { to { transform: rotate(360deg); } }
+    .mascot-img {
+      width: 100%; height: 100%;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 3px solid var(--purple);
+      box-shadow: var(--glow-purple), inset 0 0 40px rgba(155,48,255,0.3);
+      position: relative; z-index: 1;
+    }
+    .mascot-badge {
+      position: absolute; bottom: 0; right: -8px;
+      background: var(--pink);
+      color: #fff;
+      font-family: 'Orbitron', sans-serif;
+      font-size: 0.55rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      padding: 4px 10px;
+      border-radius: 20px;
+      box-shadow: var(--glow-pink);
+      z-index: 2;
+      animation: pulse 2s ease-in-out infinite;
+    }
+    @keyframes pulse {
+      0%, 100% { transform: scale(1); }
+      50%       { transform: scale(1.08); }
+    }
+
+    /* CA box */
+    .ca-container {
+      display: flex; align-items: center; gap: 0.75rem;
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(155,48,255,0.4);
+      border-radius: 12px;
+      padding: 0.75rem 1.2rem;
+      margin-bottom: 2rem;
+      animation: fadeUp 1s ease 0.6s both;
+      backdrop-filter: blur(8px);
+      max-width: 520px;
+      width: 100%;
+    }
+    .ca-label {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 0.6rem;
+      color: var(--cyan);
+      letter-spacing: 0.15em;
+      white-space: nowrap;
+      text-transform: uppercase;
+    }
+    .ca-addr {
+      flex: 1;
+      font-family: 'Orbitron', sans-serif;
+      font-size: 0.58rem;
+      color: var(--dim);
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      letter-spacing: 0.05em;
+    }
+    .ca-copy {
+      background: linear-gradient(135deg, var(--pink), var(--purple));
+      border: none; border-radius: 8px;
+      color: #fff;
+      font-family: 'Orbitron', sans-serif;
+      font-size: 0.6rem;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      padding: 0.5rem 1rem;
+      cursor: pointer;
+      transition: opacity 0.2s, transform 0.15s;
+      white-space: nowrap;
+      text-transform: uppercase;
+    }
+    .ca-copy:hover { opacity: 0.85; transform: scale(1.04); }
+    .ca-copy:active { transform: scale(0.96); }
+
+    /* CTA buttons */
+    .hero-ctas {
+      display: flex; gap: 1rem; flex-wrap: wrap; justify-content: center;
+      animation: fadeUp 1s ease 0.75s both;
+    }
+    .btn-primary {
+      background: linear-gradient(135deg, var(--pink) 0%, #c20054 100%);
+      color: #fff;
+      font-family: 'Orbitron', sans-serif;
+      font-size: 0.75rem;
+      font-weight: 700;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      text-decoration: none;
+      padding: 1rem 2.2rem;
+      border-radius: 12px;
+      box-shadow: var(--glow-pink);
+      transition: transform 0.15s, box-shadow 0.15s;
+      display: inline-flex; align-items: center; gap: 0.6rem;
+    }
+    .btn-primary:hover {
+      transform: translateY(-3px) scale(1.03);
+      box-shadow: 0 0 40px #ff2d78cc, 0 0 80px #ff2d7866;
+    }
+    .btn-secondary {
+      background: transparent;
+      border: 2px solid var(--cyan);
+      color: var(--cyan);
+      font-family: 'Orbitron', sans-serif;
+      font-size: 0.75rem;
+      font-weight: 700;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      text-decoration: none;
+      padding: 1rem 2.2rem;
+      border-radius: 12px;
+      box-shadow: var(--glow-cyan);
+      transition: transform 0.15s, background 0.2s;
+      display: inline-flex; align-items: center; gap: 0.6rem;
+    }
+    .btn-secondary:hover {
+      transform: translateY(-3px) scale(1.03);
+      background: rgba(0,245,255,0.07);
+    }
+
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(30px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    /* scroll hint */
+    .scroll-hint {
+      position: absolute; bottom: 2rem; left: 50%; transform: translateX(-50%);
+      display: flex; flex-direction: column; align-items: center; gap: 0.4rem;
+      animation: fadeUp 1s ease 1.2s both;
+    }
+    .scroll-hint span {
+      font-family: 'Orbitron', sans-serif; font-size: 0.5rem;
+      color: var(--dim); letter-spacing: 0.2em; text-transform: uppercase;
+    }
+    .scroll-arrow {
+      width: 20px; height: 20px;
+      border-right: 2px solid var(--purple);
+      border-bottom: 2px solid var(--purple);
+      transform: rotate(45deg);
+      animation: arrowBounce 1.5s ease-in-out infinite;
+    }
+    @keyframes arrowBounce {
+      0%, 100% { transform: rotate(45deg) translateY(0); opacity: 0.4; }
+      50%       { transform: rotate(45deg) translateY(6px); opacity: 1; }
+    }
+
+    /* ── SECTION SHARED ── */
+    section { position: relative; z-index: 1; }
+    .section-inner { max-width: 1100px; margin: 0 auto; padding: 6rem 2rem; }
+    .section-label {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 0.65rem;
+      color: var(--cyan);
+      letter-spacing: 0.4em;
+      text-transform: uppercase;
+      margin-bottom: 0.8rem;
+      text-shadow: var(--glow-cyan);
+    }
+    .section-title {
+      font-family: 'Zen Dots', sans-serif;
+      font-size: clamp(2rem, 5vw, 3.5rem);
+      line-height: 1.1;
+      margin-bottom: 1.5rem;
+    }
+    .section-title .accent-pink { color: var(--pink); text-shadow: var(--glow-pink); }
+    .section-title .accent-cyan { color: var(--cyan); text-shadow: var(--glow-cyan); }
+
+    /* divider */
+    .divider {
+      width: 100%;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--purple), transparent);
+      opacity: 0.4;
+    }
+
+    /* ── LORE ── */
+    #lore { background: var(--bg2); }
+    .lore-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 3rem;
+      align-items: center;
+    }
+    @media (max-width: 768px) { .lore-grid { grid-template-columns: 1fr; } }
+
+    .lore-text p {
+      color: var(--dim);
+      font-size: 1.05rem;
+      line-height: 1.75;
+      margin-bottom: 1.25rem;
+    }
+    .lore-text p strong { color: var(--white); font-weight: 700; }
+    .lore-text .highlight {
+      border-left: 3px solid var(--pink);
+      padding-left: 1.2rem;
+      color: var(--white);
+      font-style: italic;
+      font-size: 1.1rem;
+      margin: 2rem 0;
+    }
+
+    .lore-visual {
+      display: flex; flex-direction: column; gap: 1.2rem;
+    }
+    .lore-card {
+      background: rgba(255,255,255,0.03);
+      border: 1px solid rgba(155,48,255,0.25);
+      border-radius: 16px;
+      padding: 1.4rem 1.6rem;
+      display: flex; gap: 1rem; align-items: flex-start;
+      transition: border-color 0.3s, box-shadow 0.3s;
+    }
+    .lore-card:hover {
+      border-color: var(--pink);
+      box-shadow: 0 0 20px rgba(255,45,120,0.15);
+    }
+    .lore-icon {
+      font-size: 1.8rem;
+      min-width: 2.5rem;
+      text-align: center;
+    }
+    .lore-card-title {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 0.7rem;
+      color: var(--cyan);
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      margin-bottom: 0.4rem;
+    }
+    .lore-card-text {
+      color: var(--dim);
+      font-size: 0.9rem;
+      line-height: 1.55;
+    }
+
+    /* ── ROADMAP ── */
+    #roadmap {
+      background: linear-gradient(180deg, var(--bg) 0%, #100020 100%);
+    }
+    .roadmap-header { text-align: center; margin-bottom: 4rem; }
+
+    .roadmap-track {
+      position: relative;
+      max-width: 800px;
+      margin: 0 auto;
+      padding-left: 3rem;
+    }
+    .roadmap-track::before {
+      content: '';
+      position: absolute; left: 0.75rem; top: 0; bottom: 0;
+      width: 2px;
+      background: linear-gradient(180deg, var(--pink), var(--purple), var(--cyan));
+    }
+
+    .roadmap-item {
+      position: relative;
+      margin-bottom: 3.5rem;
+      padding-left: 2rem;
+    }
+    .roadmap-dot {
+      position: absolute; left: -2.35rem; top: 0.3rem;
+      width: 20px; height: 20px;
+      border-radius: 50%;
+      border: 2px solid var(--pink);
+      background: var(--bg);
+      box-shadow: var(--glow-pink);
+      transition: transform 0.3s;
+    }
+    .roadmap-item:hover .roadmap-dot {
+      transform: scale(1.4);
+    }
+    .roadmap-item.done .roadmap-dot {
+      background: var(--pink);
+    }
+    .roadmap-item.active .roadmap-dot {
+      background: transparent;
+      border-color: var(--cyan);
+      box-shadow: var(--glow-cyan);
+      animation: dotPulse 1.5s ease-in-out infinite;
+    }
+    @keyframes dotPulse {
+      0%, 100% { box-shadow: var(--glow-cyan); transform: scale(1); }
+      50%       { box-shadow: 0 0 30px #00f5ffcc; transform: scale(1.2); }
+    }
+    .roadmap-item.upcoming .roadmap-dot {
+      border-color: var(--purple);
+      box-shadow: var(--glow-purple);
+    }
+
+    .roadmap-phase {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 0.6rem;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      margin-bottom: 0.5rem;
+    }
+    .done .roadmap-phase    { color: var(--pink); }
+    .active .roadmap-phase  { color: var(--cyan); }
+    .upcoming .roadmap-phase{ color: var(--purple); }
+
+    .roadmap-title {
+      font-family: 'Zen Dots', sans-serif;
+      font-size: 1.4rem;
+      color: var(--white);
+      margin-bottom: 0.8rem;
+    }
+    .roadmap-items-list {
+      list-style: none;
+      display: flex; flex-direction: column; gap: 0.4rem;
+    }
+    .roadmap-items-list li {
+      color: var(--dim);
+      font-size: 0.95rem;
+      display: flex; gap: 0.6rem; align-items: flex-start;
+    }
+    .roadmap-items-list li::before {
+      content: '▸';
+      color: var(--pink);
+      min-width: 14px;
+    }
+    .active .roadmap-items-list li::before  { color: var(--cyan); }
+    .upcoming .roadmap-items-list li::before{ color: var(--purple); }
+
+    /* ── FOOTER ── */
+    footer {
+      background: #03000a;
+      border-top: 1px solid rgba(155,48,255,0.2);
+      text-align: center;
+      padding: 3rem 2rem;
+      position: relative; z-index: 1;
+    }
+    .footer-logo {
+      font-family: 'Zen Dots', sans-serif;
+      font-size: 2.5rem;
+      color: var(--pink);
+      text-shadow: var(--glow-pink);
+      margin-bottom: 0.5rem;
+    }
+    .footer-tagline {
+      font-size: 0.9rem;
+      color: var(--dim);
+      letter-spacing: 0.08em;
+      margin-bottom: 1.5rem;
+    }
+    .footer-note {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 0.5rem;
+      color: rgba(160,124,192,0.5);
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      margin-top: 2rem;
+    }
+
+    /* copied toast */
+    #toast {
+      position: fixed; bottom: 2rem; left: 50%; transform: translateX(-50%) translateY(80px);
+      background: var(--pink);
+      color: #fff;
+      font-family: 'Orbitron', sans-serif;
+      font-size: 0.7rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      padding: 0.7rem 1.6rem;
+      border-radius: 30px;
+      box-shadow: var(--glow-pink);
+      transition: transform 0.4s cubic-bezier(0.34,1.56,0.64,1);
+      z-index: 9999;
+      pointer-events: none;
+    }
+    #toast.show { transform: translateX(-50%) translateY(0); }
+
+    /* ── scroll reveal ── */
+    .reveal {
+      opacity: 0;
+      transform: translateY(40px);
+      transition: opacity 0.7s ease, transform 0.7s ease;
+    }
+    .reveal.visible {
+      opacity: 1;
+      transform: none;
+    }
+  </style>
+</head>
+<body>
+
+<!-- Stars background -->
+<div id="stars"></div>
+
+<!-- Toast -->
+<div id="toast">✓ Copied!</div>
+
+<!-- Nav -->
+<nav>
+  <div class="nav-logo">$CHLOE</div>
+  <div class="nav-links">
+    <a href="#hero">Home</a>
+    <a href="#lore">Lore</a>
+    <a href="#roadmap">Roadmap</a>
+    <a href="https://gmgn.ai/sol/token/2ra5idczuCQhDe1U5D52G8Rms6hzHuHeTqP51fdHpump" target="_blank">Chart ↗</a>
+  </div>
+</nav>
+
+<!-- ── HERO ── -->
+<section id="hero">
+  <div class="hero-bg-grid"></div>
+  <div class="hero-bg-radial"></div>
+
+  <div class="hero-eyecatch">⚡ AI Agent Waifu on Solana ⚡</div>
+
+  <div class="mascot-wrap">
+    <div class="mascot-ring"></div>
+    <img class="mascot-img" src="data:image/jpeg;base64,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" alt="$CHLOE Mascot" />
+    <div class="mascot-badge">LIVE ON SOLANA</div>
+  </div>
+
+  <div class="hero-title">
+    <span class="t1">$</span><span class="t2">CHLOE</span>
+  </div>
+
+  <p class="hero-tagline">She chose chaos. She chose Solana. <span>She chose you.</span></p>
+
+  <div class="ca-container">
+    <span class="ca-label">CA</span>
+    <span class="ca-addr" id="caAddr">2ra5idczuCQhDe1U5D52G8Rms6hzHuHeTqP51fdHpump</span>
+    <button class="ca-copy" onclick="copyCA()">Copy</button>
+  </div>
+
+  <div class="hero-ctas">
+    <a href="https://pump.fun/coin/2ra5idczuCQhDe1U5D52G8Rms6hzHuHeTqP51fdHpump" target="_blank" class="btn-primary">
+      ⚡ Buy $CHLOE
+    </a>
+    <a href="https://gmgn.ai/sol/token/2ra5idczuCQhDe1U5D52G8Rms6hzHuHeTqP51fdHpump" target="_blank" class="btn-secondary">
+      📈 View Chart
+    </a>
+  </div>
+
+  <div class="scroll-hint">
+    <span>Scroll</span>
+    <div class="scroll-arrow"></div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ── LORE ── -->
+<section id="lore">
+  <div class="section-inner">
+    <div class="reveal lore-grid">
+      <div class="lore-text">
+        <div class="section-label">⛩ Origin Story</div>
+        <h2 class="section-title">The <span class="accent-pink">Lore</span> of<br /><span class="accent-cyan">Chloe</span></h2>
+        <p>The lore of Chloe isn't a single epic story — it's a <strong>meta-narrative born from the chaos of 2026's AI Agent memecoin meta.</strong></p>
+        <blockquote class="highlight">"She didn't just launch. She <em>graduated.</em>"</blockquote>
+        <p>Chloe is marketed as a <strong>digital waifu</strong> — an AI agent with a playful, slightly chaotic personality who emerged from the fires of pump.fun. Her community bonded her to survival. The chart was her battlefield.</p>
+        <p>The lore is <strong>viral by design.</strong> X/Twitter degenerates adopted her as the mascot of a very specific Solana culture: the intersection of aesthetic waifu energy and the raw, unfiltered thrill of high-risk memecoin trading.</p>
+      </div>
+
+      <div class="lore-visual">
+        <div class="lore-card">
+          <div class="lore-icon">🤖</div>
+          <div>
+            <div class="lore-card-title">AI Agent Personality</div>
+            <div class="lore-card-text">Chloe isn't just a token — she's a digital entity. Playful, unpredictable, and occasionally feral.</div>
+          </div>
+        </div>
+        <div class="lore-card">
+          <div class="lore-icon">🎌</div>
+          <div>
+            <div class="lore-card-title">Waifu Aesthetics</div>
+            <div class="lore-card-text">The visual language of Chloe blends anime aesthetics with degen culture. Cute face, degenerate soul.</div>
+          </div>
+        </div>
+        <div class="lore-card">
+          <div class="lore-icon">🔥</div>
+          <div>
+            <div class="lore-card-title">Loyal Degen Community</div>
+            <div class="lore-card-text">Her holders aren't investors. They're believers. They bonded her past the graduation threshold and never looked back.</div>
+          </div>
+        </div>
+        <div class="lore-card">
+          <div class="lore-icon">𝕏</div>
+          <div>
+            <div class="lore-card-title">Viral X/Twitter Culture</div>
+            <div class="lore-card-text">Chloe lives and breathes on X. Every shill is a prayer. Every RT is a ritual. The community is the marketing department.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ── ROADMAP ── -->
+<section id="roadmap">
+  <div class="section-inner">
+    <div class="roadmap-header reveal">
+      <div class="section-label">📍 Phase Map</div>
+      <h2 class="section-title">The <span class="accent-cyan">Road</span> to <span class="accent-pink">Moon</span></h2>
+    </div>
+
+    <div class="roadmap-track">
+
+      <div class="roadmap-item done reveal">
+        <div class="roadmap-dot"></div>
+        <div class="roadmap-phase">Phase 01 — Complete</div>
+        <div class="roadmap-title">The Birth 🐣</div>
+        <ul class="roadmap-items-list">
+          <li>Token deployed on pump.fun</li>
+          <li>Community formation on X/Twitter</li>
+          <li>Waifu identity established</li>
+          <li>First wave of degen believers appear</li>
+        </ul>
+      </div>
+
+      <div class="roadmap-item active reveal">
+        <div class="roadmap-dot"></div>
+        <div class="roadmap-phase">Phase 02 — Live Now</div>
+        <div class="roadmap-title">The Graduation 🎓</div>
+        <ul class="roadmap-items-list">
+          <li>Community bonding toward graduation threshold</li>
+          <li>Raydium liquidity migration</li>
+          <li>Chart visibility on GMGN & Dexscreener</li>
+          <li>Viral shill campaigns on X — every day is fight day</li>
+        </ul>
+      </div>
+
+      <div class="roadmap-item upcoming reveal">
+        <div class="roadmap-dot"></div>
+        <div class="roadmap-phase">Phase 03 — Coming</div>
+        <div class="roadmap-title">The Ascension 🚀</div>
+        <ul class="roadmap-items-list">
+          <li>CEX listings campaign begins</li>
+          <li>Chloe AI Agent persona expansion</li>
+          <li>Community-driven lore development</li>
+          <li>Cultural takeover of the Solana memecoin meta</li>
+        </ul>
+      </div>
+
+      <div class="roadmap-item upcoming reveal">
+        <div class="roadmap-dot"></div>
+        <div class="roadmap-phase">Phase 04 — Endgame</div>
+        <div class="roadmap-title">The Legend 👑</div>
+        <ul class="roadmap-items-list">
+          <li>Top 100 Solana tokens by market cap</li>
+          <li>Chloe becomes the face of AI Waifu meta</li>
+          <li>She chose chaos. She won.</li>
+        </ul>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ── FOOTER ── -->
+<footer>
+  <div class="footer-logo">$CHLOE</div>
+  <p class="footer-tagline">She chose chaos. She chose Solana. She chose you.</p>
+  <div style="display:flex; gap:1rem; justify-content:center; flex-wrap:wrap; margin-bottom:1.5rem;">
+    <a href="https://pump.fun/coin/2ra5idczuCQhDe1U5D52G8Rms6hzHuHeTqP51fdHpump" target="_blank" class="btn-primary" style="font-size:0.65rem; padding:0.7rem 1.4rem;">⚡ Buy on pump.fun</a>
+    <a href="https://gmgn.ai/sol/token/2ra5idczuCQhDe1U5D52G8Rms6hzHuHeTqP51fdHpump" target="_blank" class="btn-secondary" style="font-size:0.65rem; padding:0.7rem 1.4rem;">📈 GMGN Chart</a>
+  </div>
+  <p class="footer-note">$CHLOE is a memecoin on Solana. Not financial advice. DYOR. Trading memecoins carries significant risk.</p>
+  <p class="footer-note" style="margin-top:0.4rem;">CA: 2ra5idczuCQhDe1U5D52G8Rms6hzHuHeTqP51fdHpump</p>
+</footer>
+
+<script>
+  // ── STARS ──
+  const starsEl = document.getElementById('stars');
+  for (let i = 0; i < 120; i++) {
+    const s = document.createElement('div');
+    s.className = 'star';
+    const size = Math.random() * 2.5 + 0.5;
+    const colors = ['#ff2d78','#00f5ff','#9b30ff','#ffffff'];
+    s.style.cssText = `
+      width:${size}px; height:${size}px;
+      left:${Math.random()*100}%;
+      top:${Math.random()*100}%;
+      background:${colors[Math.floor(Math.random()*colors.length)]};
+      --dur:${Math.random()*3+1.5}s;
+      animation-delay:${Math.random()*4}s;
+    `;
+    starsEl.appendChild(s);
+  }
+
+  // ── COPY CA ──
+  function copyCA() {
+    const ca = '2ra5idczuCQhDe1U5D52G8Rms6hzHuHeTqP51fdHpump';
+    navigator.clipboard.writeText(ca).catch(() => {
+      const ta = document.createElement('textarea');
+      ta.value = ca; document.body.appendChild(ta);
+      ta.select(); document.execCommand('copy');
+      document.body.removeChild(ta);
+    });
+    const toast = document.getElementById('toast');
+    toast.classList.add('show');
+    setTimeout(() => toast.classList.remove('show'), 2200);
+  }
+
+  // ── SCROLL REVEAL ──
+  const reveals = document.querySelectorAll('.reveal');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((e, i) => {
+      if (e.isIntersecting) {
+        setTimeout(() => e.target.classList.add('visible'), i * 80);
+        observer.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.1 });
+  reveals.forEach(r => observer.observe(r));
+</script>
+</body>
+</html>
